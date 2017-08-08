@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 public class CabBooking implements Callable<String> {
 
 	private final String URL = "<URL>";
-	private final boolean GUI_MODE = false;
+	private final boolean GUI_MODE = true;
 
 	private final String username;
 	private final String password;
@@ -123,15 +123,16 @@ public class CabBooking implements Callable<String> {
 			return "Can not capture screenshot!";
 		} catch (Exception e) {
 			File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			message = "Your seat is already booked! \nPlease see the screenshot in C->temp folder for detailed information ";
 			try {
 				FileUtils.copyFile(srcFile, new File("c:\\tmp\\screenshot.png"));
 			} catch (IOException e1) {
 				return "Can not capture screenshot!";
 			}
-			return "Your seat is already booked! \nPlease see the screenshot in C->temp folder for detailed information ";
 		} finally {
 			driver.quit();
 		}
+		return message;
 
 	}
 
